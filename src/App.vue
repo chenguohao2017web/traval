@@ -11,9 +11,10 @@ export default {
 </script>
 
 <style lang="less">
-#app {
-  html {
-    font-size:50px;
+html {
+  font-size: 50px;
+  body {
+    font-size:.24rem;
   }
 }
 </style>
