@@ -9,7 +9,7 @@
 </template>
 <script>
 import axios from 'axios'
-// import BScroll from 'better-scroll'
+import {mapGetters} from 'vuex'
 import HomeHeader from './components/Header'
 import HomeSwiper from './components/Swiper'
 import HomeIcons from './components/Icons'
@@ -29,15 +29,25 @@ export default {
       swiperList: [],
       iconList: [],
       recommendList: [],
-      weekendList: []
+      weekendList: [],
+      currentCity: '',
+      first: false
     }
   },
   mounted () {
     this.getData()
   },
+  computed: {
+    ...mapGetters(['city'])
+  },
   methods: {
     getData () {
-      axios.get('../../../static/mock/index.json').then(({ data }) => {
+      this.currentCity = this.city
+      axios.get(`../../../static/mock/index.json`, {
+        params: {
+          city: this.city
+        }
+      }).then(({ data }) => {
         if (data.ret) {
           const result = data.data
           this.swiperList = result.swiperList
@@ -46,6 +56,13 @@ export default {
           this.weekendList = result.weekendList
         }
       })
+    }
+  },
+  activated () {
+    // 当keep alive 存在的时候，不会再执行mounted函数，会走 activeted 里重新获取数据
+    if (this.currentCity !== this.city) {
+      this.currentCity = this.city
+      this.getData()
     }
   }
 }

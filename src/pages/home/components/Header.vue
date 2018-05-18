@@ -7,15 +7,21 @@
       <span class="iconfont">&#xe632;</span>
       输入城市的主题
     </div>
-    <div class="header-right">
-      城市
-      <span class="iconfont arrow-icon">&#xe64a;</span>
-    </div>
+    <router-link tag="div" to="/city">
+      <div class="header-right">
+        {{city}}
+        <span class="iconfont arrow-icon">&#xe64a;</span>
+      </div>
+    </router-link>
   </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+  computed: {
+    ...mapGetters(['city'])
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -46,7 +52,8 @@ export default {
     color: #ccc;
   }
   &-right {
-    width: 1.24rem;
+    min-width: 1.24rem;
+    padding:0 .05rem;
     float: right;
     text-align: center;
     .arrow-icon {
